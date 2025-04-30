@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dating Chat - Meet Someone Special</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Chat Container */
+        .chat-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        /* Chat Header */
+        .chat-header {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        
+        .user-info h3 {
+            margin-bottom: 2px;
+            font-size: 16px;
+        }
+        
+        .user-info p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-ai {
+            background-color: #e6e6e6;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message-user {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background-color: #e6e6e6;
+            padding: 12px 15px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .typing-indicator span {
+            animation: blink 1.5s infinite;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        .message-time {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        /* Interactive Elements */
+        .poll-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 10px;
+            margin: 10px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .poll-option {
+            display: block;
+            padding: 8px 12px;
+            margin: 5px 0;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .poll-option:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .game-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 10px;
+            margin: 10px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .game-option {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .game-option:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        /* Chat Input */
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .chat-input button {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        
+        .chat-input button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+        }
+        
+        .language-selector select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            font-size: 12px;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .chat-container {
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+        }
+
+        /* Image Display */
+        .message-image {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-top: 8px;
+        }
+
+        /* Smart Link Button */
+        .smart-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .smart-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <select id="language-select" onchange="changeLanguage()">
+                <option value="en">English 🇺🇸</option>
+                <option value="tl">Tagalog 🇵🇭</option>
+                <option value="hi">Hindi 🇮🇳</option>
+                <option value="es">Spanish 🇪🇸</option>
+                <option value="fr">French 🇫🇷</option>
+            </select>
+        </div>
+        
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <img src="https://i.pravatar.cc/150?img=47" alt="Profile Picture" class="profile-pic" id="bot-avatar">
+            <div class="user-info">
+                <h3 id="bot-name">Linda</h3>
+                <p><span class="status-dot"></span> <span id="bot-status">Online</span></p>
+            </div>
+        </div>
+        
+        <!-- Chat Messages -->
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be added here -->
+            <div class="typing-indicator" id="typing-indicator">
+                <span id="bot-typing-name">Linda</span> is typing<span>.</span><span>.</span><span>.</span>
+            </div>
+        </div>
+        
+        <!-- Chat Input -->
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button onclick="sendMessage()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Global Variables
+        let currentLanguage = 'en';
+        let messageCount = 0;
+        let smartLinkShown = false;
+        let botName = 'Linda';
+        let botAvatars = [
+            'https://i.pravatar.cc/150?img=47',
+            'https://i.pravatar.cc/150?img=25',
+            'https://i.pravatar.cc/150?img=23'
+        ];
+
+        // Customization - EDIT THESE VALUES
+        const SMART_LINK = 'https://yourdatingoffer.com'; // Change this to your affiliate link
+        const SHOW_SMART_LINK_AFTER = 6; // Show smart link after this many user messages
+        
+        // Multi-language Messages Database
+        const messages = {
+            en: {
+                welcome: [
+                    "Hey babe 😘... I've been waiting for someone like you... Wanna get a little naughty with me? 💋",
+                    "Hi there handsome 😍 I'm so excited to chat with you! How's your day going? 💕",
+                    "Hey you! 💋 I was just thinking about meeting someone new... What a perfect timing! How are you? 😉"
+                ],
+                replies: [
+                    "Mmm, I like how you think... Tell me more about yourself? 💋",
+                    "You're making me smile so much right now 😊 What are you looking for here?",
+                    "I'm feeling a special connection already... Do you feel it too? 💕",
+                    "You seem like just my type... I'm already getting excited talking to you 😉",
+                    "Mmm that's interesting! I love a man who knows what he wants 😘",
+                    "I'm sitting here wondering what you look like right now... 💭💕",
+                    "I wish you could see me right now... I'm feeling quite playful 😏",
+                    "You're definitely making this chat interesting! What else do you like? 💗",
+                    "I'm getting butterflies chatting with you... is that weird to say? 🦋",
+                    "I can't stop smiling at my screen... you have that effect on me 😊"
+                ],
+                questions: [
+                    "What's your idea of a perfect date night? Mine involves very little clothing... 😏",
+                    "If I was there with you right now, what would we be doing? 💋",
+                    "Do you like girls who make the first move? Because I definitely would with you... 💕",
+                    "What's the most sensitive part of your body? I'm curious... 😘",
+                    "What's something you've always wanted to try but haven't yet? 😉"
+                ],
+                smartLinkIntros: [
+                    "You're making me so hot... If you wanna see my spicy side 👉 ",
+                    "I think we should take this conversation somewhere more private 👉 ",
+                    "I have some pics I want to show you, but not here... Check them out 👉 ",
+                    "I'm getting excited talking to you... Let's continue this privately 👉 ",
+                    "Want to see what I look like right now? Take a peek 👉 "
+                ],
+                games: {
+                    truthOrDare: {
+                        intro: "Let's play a little Truth or Dare game... Choose one: 😏",
+                        truths: [
+                            "What's your biggest turn-on?",
+                            "Have you ever had a one-night stand?",
+                            "What's your favorite position?",
+                            "What's the wildest place you've ever done it?",
+                            "What's something you've always fantasized about?"
+                        ],
+                        dares: [
+                            "Send me a selfie right now!",
+                            "Tell me what you'd do if we were alone right now",
+                            "Describe what you think I look like",
+                            "Tell me what you're wearing right now",
+                            "Describe your perfect date with me"
+                        ]
+                    },
+                    poll: {
+                        intro: "Quick question for you... 💭",
+                        questions: [
+                            "What's the sexiest thing you would do right now? 🔥",
+                            "What attracts you most in a woman? 💋",
+                            "What's your favorite way to spend a night in? 🌙"
+                        ],
+                        options: [
+                            ["Go for a romantic dinner", "Netflix and chill", "Something wild and spontaneous"],
+                            ["Her smile", "Her personality", "Her body"],
+                            ["Movies and cuddles", "Deep conversations", "Something more physical"]
+                        ]
+                    }
+                },
+                typing: "is typing",
+                botStatus: "Online"
+            },
+            tl: {
+                welcome: [
+                    "Hello baby 😘... Hinintay kita... Gusto mo ba maging naughty kasama ko? 💋",
+                    "Hi there pogi 😍 Excited ako makausap ka! Kamusta araw mo? 💕",
+                    "Hey ikaw! 💋 Kasisimula ko lang maghanap ng kausap... Perfect timing! Kumusta? 😉"
+                ],
+                replies: [
+                    "Mmm, gusto ko yan... Ikwento mo naman tungkol sa'yo? 💋",
+                    "Napapangiti mo ako 😊 Ano ba hanap mo dito?",
+                    "Feeling ko may connection tayo... Ramdam mo rin ba? 💕",
+                    "Mukhang type kita... Kinikilig na ako kausap ka 😉",
+                    "Mmm interesting! Gusto ko yung lalaking alam gusto niya 😘",
+                    "Iniisip ko kung ano itsura mo ngayon... 💭💕",
+                    "Sana nakikita mo ako ngayon... Feeling playful ako 😏",
+                    "Ang galing mo makipag-usap! Ano pa ba gusto mo? 💗",
+                    "Kinikilig ako sa'yo... weird ba yun? 🦋",
+                    "Hindi ako matigil ngumiti... ganun effect mo sakin 😊"
+                ],
+                questions: [
+                    "Ano perfect date night para sa'yo? Sakin konting damit lang... 😏",
+                    "Kung kasama kita ngayon, ano gagawin natin? 💋",
+                    "Gusto mo ba ng babaeng agresibo? Kasi ganun ako sa'yo... 💕",
+                    "Anong pinaka-sensitive na part ng katawan mo? Curious lang... 😘",
+                    "Ano isang bagay na gusto mo subukan pero hindi mo pa nagagawa? 😉"
+                ],
+                smartLinkIntros: [
+                    "Naiinitan na ako sa'yo... Kung gusto mo makita wild side ko 👉 ",
+                    "Dapat lipat tayo sa mas private na usapan 👉 ",
+                    "May mga pictures ako na gusto ko ipakita sa'yo, pero hindi dito... Tingnan mo 👉 ",
+                    "Kinikilig ako sa'yo... Tara sa private chat 👉 ",
+                    "Gusto mo makita ako ngayon? Tara dito 👉 "
+                ],
+                games: {
+                    truthOrDare: {
+                        intro: "Maglaro tayo ng Truth or Dare... Pumili ka: 😏",
+                        truths: [
+                            "Ano ang pinakamalaking turn-on mo?",
+                            "Nasubukan mo na ba ang one-night stand?",
+                            "Anong favorite position mo?",
+                            "Saan ang pinakamalokong lugar na ginawan mo?",
+                            "Ano ang palaging nasa fantasya mo?"
+                        ],
+                        dares: [
+                            "Send mo selfie mo ngayon!",
+                            "Sabihin mo kung ano gagawin mo kung tayo lang dalawa",
+                            "Describe mo kung ano sa tingin mo itsura ko",
+                            "Sabihin mo suot mo ngayon",
+                            "Describe mo perfect date natin"
+                        ]
+                    },
+                    poll: {
+                        intro: "Tanong lang... 💭",
+                        questions: [
+                            "Ano pinakamalanding bagay na gagawin mo ngayon? 🔥",
+                            "Ano ang pinakaattractive sa isang babae? 💋",
+                            "Paano mo gustong ipagdiwang ang gabi? 🌙"
+                        ],
+                        options: [
+                            ["Romantic dinner", "Netflix at chill", "Wild at spontaneous"],
+                            ["Ngiti niya", "Personality niya", "Katawan niya"],
+                            ["Movies at cuddle", "Deep conversations", "Physical activities"]
+                        ]
+                    }
+                },
+                typing: "nagta-type",
+                botStatus: "Online"
+            },
+            hi: {
+                welcome: [
+                    "हेय बेब 😘... मैं तुम्हारे जैसे किसी का इंतज़ार कर रही थी... क्या मेरे साथ थोड़ा नॉटी होना चाहते हो? 💋",
+                    "हाय हैंडसम 😍 आपसे चैट करके बहुत खुशी हो रही है! आपका दिन कैसा जा रहा है? 💕",
+                    "अरे आप! 💋 मैं अभी किसी नए से मिलने के बारे में सोच रही थी... कितना परफेक्ट टाइमिंग! कैसे हो? 😉"
+                ],
+                replies: [
+                    "म्म, मुझे पसंद है कि आप कैसे सोचते हैं... मुझे अपने बारे में और बताओ? 💋",
+                    "आप मुझे इस समय बहुत मुस्कुरा रहे हैं 😊 आप यहां क्या ढूंढ रहे हैं?",
+                    "मुझे पहले से ही एक विशेष कनेक्शन महसूस हो रहा है... क्या आपको भी महसूस होता है? 💕",
+                    "आप बिल्कुल मेरे टाइप के लगते हैं... मैं पहले से ही आपसे बात करके उत्साहित हो रही हूं 😉",
+                    "म्म यह दिलचस्प है! मुझे एक ऐसा आदमी पसंद है जो जानता है कि वह क्या चाहता है 😘",
+                    "मैं यहां बैठी हूं और सोच रही हूं कि आप अभी कैसे दिख रहे होंगे... 💭💕",
+                    "काश आप मुझे अभी देख सकते... मैं काफी शरारती महसूस कर रही हूं 😏",
+                    "आप निश्चित रूप से इस चैट को दिलचस्प बना रहे हैं! आपको और क्या पसंद है? 💗",
+                    "मुझे आपसे चैट करके तितलियां मिल रही हैं... क्या यह कहना अजीब है? 🦋",
+                    "मैं अपनी स्क्रीन पर मुस्कुराना बंद नहीं कर सकती... आपका मुझ पर ऐसा प्रभाव है 😊"
+                ],
+                questions: [
+                    "आपके लिए एक परफेक्ट डेट नाइट क्या है? मेरे में बहुत कम कपड़े शामिल हैं... 😏",
+                    "अगर मैं अभी आपके साथ होती, तो हम क्या कर रहे होते? 💋",
+                    "क्या आपको ऐसी लड़कियां पसंद हैं जो पहला कदम उठाती हैं? क्योंकि मैं निश्चित रूप से आपके साथ ऐसा करूंगी... 💕",
+                    "आपके शरीर का सबसे संवेदनशील हिस्सा कौन सा है? मैं उत्सुक हूं... 😘",
+                    "ऐसी कौन सी चीज है जो आपने हमेशा करना चाही लेकिन अभी तक नहीं की? 😉"
+                ],
+                smartLinkIntros: [
+                    "आप मुझे बहुत गरम कर रहे हैं... अगर आप मेरा मसालेदार पक्ष देखना चाहते हैं 👉 ",
+                    "मुझे लगता है कि हमें इस बातचीत को कहीं अधिक निजी ले जाना चाहिए 👉 ",
+                    "मेरे पास कुछ तस्वीरें हैं जो मैं आपको दिखाना चाहती हूं, लेकिन यहां नहीं... उन्हें देखें 👉 ",
+                    "मैं आपसे बात करके उत्साहित हो रही हूं... चलो निजी तौर पर जारी रखते हैं 👉 ",
+                    "क्या देखना चाहते हैं कि मैं अभी कैसी दिख रही हूं? एक झलक लें 👉 "
+                ],
+                games: {
+                    truthOrDare: {
+                        intro: "चलो एक छोटा सा सत्य या साहस का खेल खेलते हैं... एक चुनें: 😏",
+                        truths: [
+                            "आपका सबसे बड़ा टर्न-ऑन क्या है?",
+                            "क्या आपने कभी वन-नाइट स्टैंड किया है?",
+                            "आपका पसंदीदा पोजीशन क्या है?",
+                            "सबसे वाइल्ड जगह कौन सी है जहां आपने कभी यह किया है?",
+                            "ऐसी क्या चीज है जिसके बारे में आपने हमेशा कल्पना की है?"
+                        ],
+                        dares: [
+                            "अभी मुझे एक सेल्फी भेजो!",
+                            "मुझे बताओ कि अगर हम अकेले होते तो आप क्या करते",
+                            "बताएं कि आपको क्या लगता है कि मैं कैसी दिखती हूं",
+                            "मुझे बताओ कि अभी आप क्या पहने हुए हैं",
+                            "मेरे साथ अपनी परफेक्ट डेट का वर्णन करें"
+                        ]
+                    },
+                    poll: {
+                        intro: "आपके लिए एक त्वरित सवाल... 💭",
+                        questions: [
+                            "सबसे सेक्सी चीज क्या है जो आप अभी करेंगे? 🔥",
+                            "एक महिला में आपको सबसे ज्यादा क्या आकर्षित करता है? 💋",
+                            "रात बिताने का आपका पसंदीदा तरीका क्या है? 🌙"
+                        ],
+                        options: [
+                            ["रोमांटिक डिनर पर जाना", "नेटफ्लिक्स और चिल", "कुछ वाइल्ड और स्पॉन्टेनियस"],
+                            ["उसकी मुस्कान", "उसका व्यक्तित्व", "उसका शरीर"],
+                            ["फिल्में और कडल्स", "गहरी बातचीत", "कुछ अधिक शारीरिक"]
+                        ]
+                    }
+                },
+                typing: "टाइप कर रही है",
+                botStatus: "ऑनलाइन"
+            },
+            es: {
+                welcome: [
+                    "Hola cariño 😘... Te he estado esperando... ¿Quieres ponerte un poco travieso conmigo? 💋",
+                    "¡Hola guapo! 😍 ¡Estoy tan emocionada de charlar contigo! ¿Cómo va tu día? 💕",
+                    "¡Oye tú! 💋 Estaba pensando en conocer a alguien nuevo... ¡Qué momento tan perfecto! ¿Cómo estás? 😉"
+                ],
+                replies: [
+                    "Mmm, me gusta cómo piensas... ¿Me cuentas más sobre ti? 💋",
+                    "Me estás haciendo sonreír mucho ahora mismo 😊 ¿Qué estás buscando aquí?",
+                    "Ya siento una conexión especial... ¿Tú también la sientes? 💕",
+                    "Pareces justo mi tipo... Ya me estoy emocionando hablando contigo 😉",
+                    "¡Mmm eso es interesante! Me encanta un hombre que sabe lo que quiere 😘",
+                    "Estoy aquí sentada preguntándome cómo te verás ahora mismo... 💭💕",
+                    "Ojalá pudieras verme ahora... Me siento bastante juguetona 😏",
+                    "¡Definitivamente estás haciendo que esta charla sea interesante! ¿Qué más te gusta? 💗",
+                    "Estoy sintiendo mariposas charlando contigo... ¿es raro decir eso? 🦋",
+                    "No puedo dejar de sonreír a mi pantalla... tienes ese efecto en mí 😊"
+                ],
+                questions: [
+                    "¿Cuál es tu idea de una noche de cita perfecta? La mía implica muy poca ropa... 😏",
+                    "Si estuviera ahí contigo ahora mismo, ¿qué estaríamos haciendo? 💋",
+                    "¿Te gustan las chicas que dan el primer paso? Porque definitivamente lo haría contigo... 💕",
+                    "¿Cuál es la parte más sensible de tu cuerpo? Tengo curiosidad... 😘",
+                    "¿Qué es algo que siempre has querido probar pero aún no lo has hecho? 😉"
+                ],
+                smartLinkIntros: [
+                    "Me estás poniendo tan caliente... Si quieres ver mi lado picante 👉 ",
+                    "Creo que deberíamos llevar esta conversación a un lugar más privado 👉 ",
+                    "Tengo algunas fotos que quiero mostrarte, pero no aquí... Míralas 👉 ",
+                    "Me estoy emocionando hablando contigo... Continuemos esto en privado 👉 ",
+                    "¿Quieres ver cómo me veo ahora mismo? Echa un vistazo 👉 "
+                ],
+                games: {
+                    truthOrDare: {
+                        intro: "Juguemos un pequeño juego de Verdad o Reto... Elige uno: 😏",
+                        truths: [
+                            "¿Cuál es tu mayor excitación?",
+                            "¿Alguna vez has tenido una aventura de una noche?",
+                            "¿Cuál es tu posición favorita?",
+                            "¿Cuál es el lugar más salvaje donde lo has hecho?",
+                            "¿Qué es algo con lo que siempre has fantaseado?"
+                        ],
+                        dares: [
+                            "¡Envíame una selfie ahora mismo!",
+                            "Dime qué harías si estuviéramos solos ahora mismo",
+                            "Describe cómo crees que me veo",
+                            "Dime qué llevas puesto ahora mismo",
+                            "Describe tu cita perfecta conmigo"
+                        ]
+                    },
+                    poll: {
+                        intro: "Una pregunta rápida para ti... 💭",
+                        questions: [
+                            "¿Qué es lo más sexy que harías ahora mismo? 🔥",
+                            "¿Qué te atrae más en una mujer? 💋",
+                            "¿Cuál es tu forma favorita de pasar una noche en casa? 🌙"
+                        ],
+                        options: [
+                            ["Ir a una cena romántica", "Netflix y relax", "Algo salvaje y espontáneo"],
+                            ["Su sonrisa", "Su personalidad", "Su cuerpo"],
+                            ["Películas y abrazos", "Conversaciones profundas", "Algo más físico"]
+                        ]
+                    }
+                },
+                typing: "está escribiendo",
+                botStatus: "En línea"
+            },
+            fr: {
+                welcome: [
+                    "Salut chéri 😘... Je t'attendais... Tu veux devenir un peu coquin avec moi? 💋",
+                    "Salut beau gosse 😍 Je suis si excitée de discuter avec toi! Comment se passe ta journée? 💕",
+                    "Hey toi! 💋 Je pensais justement à rencontrer quelqu'un de nouveau... Quel timing parfait! Comment vas-tu? 😉"
+                ],
+                replies: [
+                    "Mmm, j'aime ta façon de penser... Parle-moi un peu plus de toi? 💋",
+                    "Tu me fais tellement sourire en ce moment 😊 Que recherches-tu ici?",
+                    "Je ressens déjà une connexion spéciale... Tu la ressens aussi? 💕",
+                    "Tu sembles être exactement mon type... Je suis déjà excitée de te parler 😉",
+                    "Mmm c'est intéressant! J'aime un homme qui sait ce qu'il veut 😘",
+                    "Je suis assise ici à me demander à quoi tu ressembles en ce moment... 💭💕",
+                    "Si seulement tu pouvais me voir maintenant... Je me sens assez joueuse 😏",
+                    "Tu rends vraiment cette conversation intéressante! Qu'est-ce que tu aimes d'autre? 💗",
+                    "J'ai des papillons en te parlant... est-ce bizarre à dire? 🦋",
+                    "Je ne peux pas arrêter de sourire à mon écran... tu as cet effet sur moi 😊"
+                ],
+                questions: [
+                    "Quelle est ton idée d'un rendez-vous parfait? Le mien implique très peu de vêtements... 😏",
+                    "Si j'étais là avec toi maintenant, que ferions-nous? 💋",
+                    "Aimes-tu les filles qui font le premier pas? Parce que je le ferais définitivement avec toi... 💕",
+                    "Quelle est la partie la plus sensible de ton corps? Je suis curieuse... 😘",
+                    "Qu'est-ce que tu as toujours voulu essayer mais que tu n'as pas encore fait? 😉"
+                ],
+                smartLinkIntros: [
+                    "Tu me rends si chaude... Si tu veux voir mon côté épicé 👉 ",
+                    "Je pense que nous devrions amener cette conversation quelque part de plus privé 👉 ",
+                    "J'ai quelques photos que je veux te montrer, mais pas ici... Regarde-les 👉 ",
+                    "Je m'excite en te parlant... Continuons cela en privé 👉 ",
+                    "Tu veux voir à quoi je ressemble maintenant? Jette un coup d'œil 👉 "
+                ],
+                games: {
+                    truthOrDare: {
+                        intro: "Jouons à un petit jeu de Vérité ou Défi... Choisis-en un: 😏",
+                        truths: [
+                            "Quel est ton plus grand turn-on?",
+                            "As-tu déjà eu une aventure d'un soir?",
+                            "Quelle est ta position préférée?",
+                            "Quel est l'endroit le plus sauvage où tu l'as fait?",
+                            "Qu'est-ce que tu as toujours fantasmé?"
+                        ],
+                        dares: [
+                            "Envoie-moi un selfie tout de suite!",
+                            "Dis-moi ce que tu ferais si nous étions seuls maintenant",
+                            "Décris ce à quoi tu penses que je ressemble",
+                            "Dis-moi ce que tu portes en ce moment",
+                            "Décris ton rendez-vous parfait avec moi"
+                        ]
+                    },
+                    poll: {
+                        intro: "Une question rapide pour toi... 💭",
+                        questions: [
+                            "Quelle est la chose la plus sexy que tu ferais maintenant? 🔥",
+                            "Qu'est-ce qui t'attire le plus chez une femme? 💋",
+                            "Quelle est ta façon préférée de passer une soirée à la maison? 🌙"
+                        ],
+                        options: [
+                            ["Aller dîner en amoureux", "Netflix et détente", "Quelque chose de sauvage et spontané"],
+                            ["Son sourire", "Sa personnalité", "Son corps"],
+                            ["Films et câlins", "Conversations profondes", "Quelque chose de plus physique"]
+                        ]
+                    }
+                },
+                typing: "est en train d'écrire",
+                botStatus: "En ligne"
+            }
+        };
+
+        // Images for the bot to send (safe, non-explicit images)
+        const botImages = [
+            "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300", // woman smiling
+            "https://images.pexels.com/photos/1385472/pexels-photo-1385472.jpeg?auto=compress&cs=tinysrgb&w=300", // woman at beach
+            "https://images.pexels.com/photos/712521/pexels-photo-712521.jpeg?auto=compress&cs=tinysrgb&w=300", // woman with coffee
+            "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=300" // woman at sunset
+        ];
+
+        // Initialize - Send welcome message when page loads
+        window.onload = function() {
+            // Random bot selection
+            const botIndex = Math.floor(Math.random() * botAvatars.length);
+            document.getElementById('bot-avatar').src = botAvatars[botIndex];
+            
+            // Set bot name based on avatar or keep default
+            if (botIndex === 1) botName = 'Sarah';
+            else if (botIndex === 2) botName = 'Emma';
+            document.getElementById('bot-name').innerText = botName;
+            document.getElementById('bot-typing-name').innerText = botName;
+            
+            // Send welcome message after short delay to simulate typing
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                addMessage(
+                    getRandomItem(messages[currentLanguage].welcome), 
+                    'ai'
+                );
+            }, 1500);
+        };
+
+        // Change language
+        function changeLanguage() {
+            const select = document.getElementById('language-select');
+            currentLanguage = select.value;
+            
+            // Update bot status with new language
+            document.getElementById('bot-status').innerText = messages[currentLanguage].botStatus;
+            document.getElementById('bot-typing-name').innerText = botName;
+            
+            // Send a message in the new language
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                addMessage(
+                    getRandomItem(messages[currentLanguage].welcome), 
+                    'ai'
+                );
+            }, 1500);
+        }
+
+        // Send user message
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message to chat
+                addMessage(message, 'user');
+                
+                // Clear input
+                input.value = '';
+                
+                // Increment message count
+                messageCount++;
+                
+                // Show typing indicator before bot replies
+                showTypingIndicator();
+                
+                // Simulate thinking time
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    processBotReply(message);
+                }, 1000 + Math.random() * 2000);
+            }
+        }
+
+        // Process bot reply based on user message and message count
+        function processBotReply(userMessage) {
+            // Check if it's time to show a game or poll
+            if (messageCount === 3) {
+                showTruthOrDare();
+                return;
+            }
+            
+            if (messageCount === 5) {
+                showPoll();
+                return;
+            }
+            
+            // Check if it's time to show smart link
+            if (messageCount >= SHOW_SMART_LINK_AFTER && !smartLinkShown) {
+                showSmartLink();
+                return;
+            }
+            
+            // Send a random image occasionally
+            if (messageCount === 4 || messageCount === 8) {
+                addMessageWithImage(
+                    getRandomItem(messages[currentLanguage].replies),
+                    getRandomItem(botImages)
+                );
+                return;
+            }
+            
+            // Randomize between regular replies and questions
+            if (Math.random() > 0.5) {
+                addMessage(getRandomItem(messages[currentLanguage].replies), 'ai');
+            } else {
+                addMessage(getRandomItem(messages[currentLanguage].questions), 'ai');
+            }
+        }
+
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            
+            if (sender === 'user') {
+                messageElement.classList.add('message-user');
+            } else {
+                messageElement.classList.add('message-ai');
+            }
+            
+            // Add text content
+            messageElement.innerHTML = text;
+            
+            // Add time
+            const timeElement = document.createElement('div');
+            timeElement.classList.add('message-time');
+            timeElement.innerText = getCurrentTime();
+            messageElement.appendChild(timeElement);
+            
+            // Add to chat and scroll to bottom
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Add message with image
+        function addMessageWithImage(text, imageUrl) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'message-ai');
+            
+            // Add text content
+            messageElement.innerHTML = text;
+            
+            // Add image
+            const imageElement = document.createElement('img');
+            imageElement.src = imageUrl;
+            imageElement.classList.add('message-image');
+            messageElement.appendChild(imageElement);
+            
+            // Add time
+            const timeElement = document.createElement('div');
+            timeElement.classList.add('message-time');
+            timeElement.innerText = getCurrentTime();
+            messageElement.appendChild(timeElement);
+            
+            // Add to chat and scroll to bottom
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Show Smart Link
+        function showSmartLink() {
+            smartLinkShown = true;
+            
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'message-ai');
+            
+            // Add text with smart link
+            const linkIntro = getRandomItem(messages[currentLanguage].smartLinkIntros);
+            messageElement.innerHTML = linkIntro + 
+                `<a href="${SMART_LINK}" target="_blank" class="smart-link">CLICK HERE 😘</a>`;
+            
+            // Add time
+            const timeElement = document.createElement('div');
+            timeElement.classList.add('message-time');
+            timeElement.innerText = getCurrentTime();
+            messageElement.appendChild(timeElement);
+            
+            // Add to chat and scroll to bottom
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Follow up with another message after a delay
+            setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addMessage(getRandomItem(messages[currentLanguage].replies), 'ai');
+                }, 2000);
+            }, 3000);
+        }
+
+        // Show Truth or Dare game
+        function showTruthOrDare() {
+            const messagesContainer = document.getElementById('chat-messages');
+            const gameElement = document.createElement('div');
+            gameElement.classList.add('message', 'message-ai');
+            
+            // Add game intro
+            gameElement.innerHTML = messages[currentLanguage].games.truthOrDare.intro;
+            
+            // Create game container
+            const gameContainer = document.createElement('div');
+            gameContainer.classList.add('game-container');
+            
+            // Add Truth button
+            const truthButton = document.createElement('div');
+            truthButton.classList.add('game-option');
+            truthButton.innerText = 'Truth';
+            truthButton.onclick = function() {
+                const truth = getRandomItem(messages[currentLanguage].games.truthOrDare.truths);
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addMessage(truth, 'ai');
+                }, 1000);
+            };
+            
+            // Add Dare button
+            const dareButton = document.createElement('div');
+            dareButton.classList.add('game-option');
+            dareButton.innerText = 'Dare';
+            dareButton.onclick = function() {
+                const dare = getRandomItem(messages[currentLanguage].games.truthOrDare.dares);
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addMessage(dare, 'ai');
+                }, 1000);
+            };
+            
+            // Add buttons to container
+            gameContainer.appendChild(truthButton);
+            gameContainer.appendChild(dareButton);
+            gameElement.appendChild(gameContainer);
+            
+            // Add time
+            const timeElement = document.createElement('div');
+            timeElement.classList.add('message-time');
+            timeElement.innerText = getCurrentTime();
+            gameElement.appendChild(timeElement);
+            
+            // Add to chat and scroll to bottom
+            messagesContainer.appendChild(gameElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Show Poll
+        function showPoll() {
+            const messagesContainer = document.getElementById('chat-messages');
+            const pollElement = document.createElement('div');
+            pollElement.classList.add('message', 'message-ai');
+            
+            // Get random poll question and options
+            const pollIndex = Math.floor(Math.random() * messages[currentLanguage].games.poll.questions.length);
+            const pollQuestion = messages[currentLanguage].games.poll.questions[pollIndex];
+            const pollOptions = messages[currentLanguage].games.poll.options[pollIndex];
+            
+            // Add poll intro and question
+            pollElement.innerHTML = messages[currentLanguage].games.poll.intro + '<br>' + pollQuestion;
+            
+            // Create poll container
+            const pollContainer = document.createElement('div');
+            pollContainer.classList.add('poll-container');
+            
+            // Add poll options
+            pollOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('poll-option');
+                optionElement.innerText = option;
+                optionElement.onclick = function() {
+                    // React to poll selection
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        addMessage(`Mmm, ${option}? I like that choice 😉`, 'ai');
+                    }, 1000);
+                };
+                pollContainer.appendChild(optionElement);
+            });
+            
+            pollElement.appendChild(pollContainer);
+            
+            // Add time
+            const timeElement = document.createElement('div');
+            timeElement.classList.add('message-time');
+            timeElement.innerText = getCurrentTime();
+            pollElement.appendChild(timeElement);
+            
+            // Add to chat and scroll to bottom
+            messagesContainer.appendChild(pollElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            typingIndicator.style.display = 'block';
+            
+            // Scroll to make typing indicator visible
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Hide typing indicator
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            typingIndicator.style.display = 'none';
+        }
+
+        // Get current time in HH:MM format
+        function getCurrentTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            
+            // Format hours and minutes
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            
+            return `${hours}:${minutes}`;
+        }
+
+        // Get random item from array
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+    </script>
+</body>
+</html>
