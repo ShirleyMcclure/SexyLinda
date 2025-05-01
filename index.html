@@ -1301,6 +1301,31 @@
     padding-bottom: 120px !important;
   }
 }
+
+/* Optimize 3-button block layout on mobile */
+@media (max-width: 768px) {
+  #desktopSmartlinks {
+    display: block !important;
+    position: relative;
+    padding: 10px 5px;
+    margin: 5px auto 10px auto;
+    max-width: 100%;
+  }
+  #desktopSmartlinks a {
+    display: block;
+    margin: 4px auto;
+    font-size: 0.85rem;
+    padding: 10px 12px;
+    line-height: 1.2;
+  }
+  #desktopSmartlinks p {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  .chat-messages {
+    padding-bottom: 140px !important; /* make room but not too much */
+  }
+}
 </style>
 </head>
 <body>
@@ -2259,9 +2284,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <!-- Floating Button -->
-
 <!-- Popup Locker -->
-
 <script>
 document.getElementById('popupTrigger').onclick = function() {
   document.getElementById('popupLocker').style.display = 'flex';
