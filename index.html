@@ -1288,6 +1288,19 @@
   opacity: 0.95 !important;
   filter: blur(2px) brightness(1.3) !important;
 }
+
+/* Ensure all smartlink buttons are visible in mobile chat area */
+@media (max-width: 768px) {
+  #desktopSmartlinks {
+    display: block !important;
+    position: relative;
+    margin-bottom: 10px;
+    z-index: 10;
+  }
+  .chat-messages {
+    padding-bottom: 120px !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -1367,9 +1380,9 @@
 <script>
         // Configuration
         const config = {
-            smartlink1: 'https://tinyurl.com/4y6xvezz',
-            smartlink2: 'https://tinyurl.com/37bhu8wx',
-            contentLocker: 'https://tinyurl.com/mu38yx7z',
+            smartlink1: 'https://shirleymcclure.github.io/SexyLinda/link1.html',
+            smartlink2: 'https://shirleymcclure.github.io/SexyLinda/link2.html',
+            contentLocker: 'https://shirleymcclure.github.io/SexyLinda/locker.html',
             botName: 'Linda',
             huggingFaceAPI: 'https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill',
             huggingFaceToken: '', // You'll need to get a free token from Hugging Face
@@ -2246,18 +2259,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <!-- Floating Button -->
-<button id="popupTrigger" style="position:fixed;bottom:100px;right:20px;z-index:9999;background:#ff3896;color:#fff;border:none;border-radius:50%;width:60px;height:60px;font-size:24px;box-shadow:0 0 10px rgba(0,0,0,0.4);cursor:pointer;">💋</button>
+
 <!-- Popup Locker -->
-<div id="popupLocker" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:9998;justify-content:center;align-items:center;flex-direction:column;color:white;text-align:center;padding:20px;">
-<div style="max-width:90%;">
-<h2 style="font-size:1.5rem;margin-bottom:1rem;">💖 Unlock Naughty Surprises 💖</h2>
-<p>Choose one of these private access doors:</p>
-<a href="https://tinyurl.com/4y6xvezz" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#ff4b91;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">🔥 See Who’s Ready to Hookup Near You</a>
-<a href="https://tinyurl.com/37bhu8wx" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#8a2be2;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">💃 Watch Girls Flirt Live (Unfiltered!)</a>
-<a href="https://tinyurl.com/mu38yx7z" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#ff0000;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">🔓 Unlock Free Photos &amp; Videos Instantly</a>
-<button onclick="document.getElementById('popupLocker').style.display='none'" style="margin-top:20px;padding:10px 20px;border:none;border-radius:20px;background:#666;color:white;">Close</button>
-</div>
-</div>
+
 <script>
 document.getElementById('popupTrigger').onclick = function() {
   document.getElementById('popupLocker').style.display = 'flex';
