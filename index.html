@@ -1458,6 +1458,44 @@
     height: 38px;
   }
 }
+
+@media (max-width: 768px) {
+  #desktopSmartlinks {
+    display: flex !important;
+    flex-direction: column;
+    gap: 6px;
+    margin: 5px 0;
+    padding: 4px 8px;
+    max-height: 110px;
+    overflow-y: auto;
+  }
+  #desktopSmartlinks a {
+    font-size: 0.7rem;
+    padding: 5px 8px;
+    line-height: 1.2;
+  }
+  #desktopSmartlinks p {
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+  }
+  .chat-messages {
+    flex: 1;
+    padding: 8px 12px 120px;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+  }
+  .chat-input {
+    padding: 10px 12px;
+  }
+  #messageInput {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+  .send-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
 </style>
 </head>
 <body>
