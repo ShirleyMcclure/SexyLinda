@@ -1253,6 +1253,35 @@
   opacity: 0.6 !important;
   filter: blur(6px) !important;
 }
+
+/* Second-level fix for blur image visibility */
+.chat-background .blur-image {
+  opacity: 0.85 !important;
+  filter: blur(4px) brightness(1.1) !important;
+}
+
+/* More reliable layout for mobile */
+@media (max-width: 768px) {
+  body, html {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  .chat-input {
+    flex-shrink: 0;
+  }
+}
 </style>
 </head>
 <body>
