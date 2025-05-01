@@ -2211,5 +2211,66 @@ document.getElementById('popupTrigger').onclick = function() {
 </script>
 
 
+
+<!-- 🔥 Smartlink Buttons Section (Desktop only) -->
+<div id="desktopSmartlinks" style="display:none;text-align:center;margin-top:20px;">
+  <p style="color:white;font-weight:bold;">💥 Explore Hot & Naughty Secrets:</p>
+  <a href="https://shirleymcclure.github.io/SexyLinda/link1.html" target="_blank" style="margin:5px;padding:12px 20px;background:#ff4b91;color:white;font-weight:bold;border-radius:9999px;display:inline-block;">🔥 She’s 2 Miles Away & Very Horny 😈</a>
+  <a href="https://shirleymcclure.github.io/SexyLinda/link2.html" target="_blank" style="margin:5px;padding:12px 20px;background:#8a2be2;color:white;font-weight:bold;border-radius:9999px;display:inline-block;">💃 Live Strip Video Chat (Uncensored)</a>
+  <a href="https://shirleymcclure.github.io/SexyLinda/locker.html" target="_blank" style="margin:5px;padding:12px 20px;background:#ff0000;color:white;font-weight:bold;border-radius:9999px;display:inline-block;">🔓 Watch Her Nudes for Free – No Signup!</a>
+</div>
+
+<!-- Floating Button for Mobile -->
+<button id="popupTrigger" style="position:fixed;bottom:100px;right:20px;z-index:9999;background:#ff3896;color:#fff;border:none;border-radius:50%;width:60px;height:60px;font-size:24px;box-shadow:0 0 10px rgba(0,0,0,0.4);cursor:pointer;">💋</button>
+
+<!-- Popup Locker -->
+<div id="popupLocker" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:9998;justify-content:center;align-items:center;flex-direction:column;color:white;text-align:center;padding:20px;">
+  <div style="max-width:90%;">
+    <h2 style="font-size:1.5rem;margin-bottom:1rem;">💖 Unlock Naughty Surprises 💖</h2>
+    <p>Choose your temptation:</p>
+    <a href="https://shirleymcclure.github.io/SexyLinda/link1.html" target="_blank" style="display:block;margin:10px;padding:12px 20px;background:#ff4b91;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">🔥 She’s Nearby & Waiting For You 😈</a>
+    <a href="https://shirleymcclure.github.io/SexyLinda/link2.html" target="_blank" style="display:block;margin:10px;padding:12px 20px;background:#8a2be2;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">💃 See Her Strip Live Now</a>
+    <a href="https://shirleymcclure.github.io/SexyLinda/locker.html" target="_blank" style="display:block;margin:10px;padding:12px 20px;background:#ff0000;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">🔓 Unlock Her Private Album for Free</a>
+    <button onclick="document.getElementById('popupLocker').style.display='none'" style="margin-top:20px;padding:10px 20px;border:none;border-radius:20px;background:#666;color:white;">Close</button>
+  </div>
+</div>
+
+<script>
+  if (window.innerWidth > 768) {
+    document.getElementById("desktopSmartlinks").style.display = "block";
+  }
+  document.getElementById("popupTrigger").onclick = function() {
+    document.getElementById("popupLocker").style.display = "flex";
+  };
+  let missYouSent = false;
+  let welcomeBackSent = false;
+  let timeout;
+  function addMessage(sender, text) {
+    const msg = document.createElement("div");
+    msg.className = sender === 'Linda' ? "bot-message message" : "user-message message";
+    msg.textContent = text;
+    document.querySelector(".chat-messages").appendChild(msg);
+    document.querySelector(".chat-messages").scrollTop = document.querySelector(".chat-messages").scrollHeight;
+  }
+  function resetInactivityTimer() {
+    if (missYouSent && !welcomeBackSent) {
+      addMessage('Linda', "❤️ Welcome back baby... I missed you.");
+      welcomeBackSent = true;
+    }
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      if (!missYouSent) {
+        addMessage('Linda', "🥺 Are you there baby? I miss you already...");
+        missYouSent = true;
+      }
+    }, 5 * 60 * 1000);
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    resetInactivityTimer();
+    document.getElementById("messageInput")?.addEventListener("input", resetInactivityTimer);
+    document.querySelector(".send-btn")?.addEventListener("click", resetInactivityTimer);
+  });
+</script>
+
 </body>
 </html>
