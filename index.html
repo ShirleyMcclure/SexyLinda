@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Linda's Dating Chat App</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Linda's Dating Chat App</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
 @media (max-width: 640px) {
   #messageInput {
     width: calc(100% - 70px);
@@ -1230,91 +1231,105 @@
             top: 40%;
             left: 50%;
         }
-    </style>
+    
+/* Fix for chat window cutoff on mobile Chrome/WhatsApp */
+@media (max-width: 768px) {
+  body, html {
+    height: 100vh;
+    overflow: hidden;
+  }
+  .app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+}
+
+.chat-background .blur-image {
+  opacity: 0.6 !important;
+  filter: blur(6px) !important;
+}
+</style>
 </head>
 <body>
-    <!-- Enhanced animated elements -->
-    <div class="animated-elements">
-        <div class="background-heart heart1">❤️</div>
-        <div class="background-heart heart2">❤️</div>
-        <div class="background-heart heart3">❤️</div>
-        <div class="background-heart heart4">❤️</div>
-        <div class="background-star star1">⭐</div>
-        <div class="background-star star2">⭐</div>
-        <div class="background-kiss kiss1">💋</div>
-        <div class="background-kiss kiss2">💋</div>
-    </div>
-
-    <!-- Decorative background shapes -->
-    <div class="decorative-shape shape1"></div>
-    <div class="decorative-shape shape2"></div>
-    <div class="decorative-shape shape3"></div>
-
-    <div class="app-container">
-        <div class="chat-header shimmer">
-            <div class="header-title">
-                <div class="profile-pic-container">
-                    <img src="https://i.pravatar.cc/150?img=29" alt="Profile" class="profile-pic">
-                    <div class="status-indicator"></div>
-                </div>
-                <div class="profile-info">
-                    <h1>Linda</h1>
-                    <div class="status"><span class="online-dot"></span>Online now</div>
-                </div>
-            </div>
-            <div class="action-buttons">
-                <button class="header-btn glossy">
-                    <i class="fas fa-phone"></i>
-                </button>
-                <button class="header-btn glossy">
-                    <i class="fas fa-video"></i>
-                </button>
-            </div>
-        </div>
-        
-        <div class="chat-messages pulsing-bg" id="chatMessages">
-            <!-- Enhanced chat background with sexy blurry images -->
-            <div class="chat-background">
-                <div class="blur-image blur-image-1"></div>
-                <div class="blur-image blur-image-2"></div>
-                <div class="blur-image blur-image-3"></div>
-                <div class="blur-image blur-image-4"></div>
-                <div class="bg-pattern bg-pattern-hearts"></div>
-                <div class="bg-pattern bg-pattern-stars"></div>
-
-                <!-- Additional graphic elements inside chat window -->
-                <div class="chat-graphic graphic-heart graphic-heart-1"></div>
-                <div class="chat-graphic graphic-star graphic-star-1"></div>
-                <div class="chat-graphic graphic-lips graphic-lips-1"></div>
-                <div class="chat-graphic graphic-heart graphic-heart-2"></div>
-                <div class="chat-graphic graphic-star graphic-star-2"></div>
-                <div class="chat-graphic graphic-lips graphic-lips-2"></div>
-            </div>
-            <!-- Messages will appear here -->
-        </div>
-        
-        <div class="typing-indicator" id="typingIndicator">
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        </div>
-        
-        <div class="chat-input">
-            <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off">
-            <button class="send-btn glossy" id="sendButton">
-                <svg class="send-icon" viewBox="0 0 24 24">
-                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                </svg>
-            </button>
-        </div>
-    </div>
-    
-    <div class="modal" id="imageModal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImage">
-    </div>
-
-    <script>
+<!-- Enhanced animated elements -->
+<div class="animated-elements">
+<div class="background-heart heart1">❤️</div>
+<div class="background-heart heart2">❤️</div>
+<div class="background-heart heart3">❤️</div>
+<div class="background-heart heart4">❤️</div>
+<div class="background-star star1">⭐</div>
+<div class="background-star star2">⭐</div>
+<div class="background-kiss kiss1">💋</div>
+<div class="background-kiss kiss2">💋</div>
+</div>
+<!-- Decorative background shapes -->
+<div class="decorative-shape shape1"></div>
+<div class="decorative-shape shape2"></div>
+<div class="decorative-shape shape3"></div>
+<div class="app-container">
+<div class="chat-header shimmer">
+<div class="header-title">
+<div class="profile-pic-container">
+<img alt="Profile" class="profile-pic" src="https://i.pravatar.cc/150?img=29"/>
+<div class="status-indicator"></div>
+</div>
+<div class="profile-info">
+<h1>Linda</h1>
+<div class="status"><span class="online-dot"></span>Online now</div>
+</div>
+</div>
+<div class="action-buttons">
+<button class="header-btn glossy">
+<i class="fas fa-phone"></i>
+</button>
+<button class="header-btn glossy">
+<i class="fas fa-video"></i>
+</button>
+</div>
+</div>
+<div class="chat-messages pulsing-bg" id="chatMessages">
+<!-- Enhanced chat background with sexy blurry images -->
+<div class="chat-background">
+<div class="blur-image blur-image-1"></div>
+<div class="blur-image blur-image-2"></div>
+<div class="blur-image blur-image-3"></div>
+<div class="blur-image blur-image-4"></div>
+<div class="bg-pattern bg-pattern-hearts"></div>
+<div class="bg-pattern bg-pattern-stars"></div>
+<!-- Additional graphic elements inside chat window -->
+<div class="chat-graphic graphic-heart graphic-heart-1"></div>
+<div class="chat-graphic graphic-star graphic-star-1"></div>
+<div class="chat-graphic graphic-lips graphic-lips-1"></div>
+<div class="chat-graphic graphic-heart graphic-heart-2"></div>
+<div class="chat-graphic graphic-star graphic-star-2"></div>
+<div class="chat-graphic graphic-lips graphic-lips-2"></div>
+</div>
+<!-- Messages will appear here -->
+</div>
+<div class="typing-indicator" id="typingIndicator">
+<div class="typing-dot"></div>
+<div class="typing-dot"></div>
+<div class="typing-dot"></div>
+</div>
+<div class="chat-input">
+<input autocomplete="off" id="messageInput" placeholder="Type your message..." type="text"/>
+<button class="send-btn glossy" id="sendButton">
+<svg class="send-icon" viewbox="0 0 24 24">
+<path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+</svg>
+</button>
+</div>
+</div>
+<div class="modal" id="imageModal">
+<span class="close-modal">×</span>
+<img class="modal-content" id="modalImage"/>
+</div>
+<script>
         // Configuration
         const config = {
             smartlink1: 'https://tinyurl.com/4y6xvezz',
@@ -2187,54 +2202,44 @@
             }
         }
     </script>
-
-
 <!-- Floating Button -->
 <button id="popupTrigger" style="position:fixed;bottom:100px;right:20px;z-index:9999;background:#ff3896;color:#fff;border:none;border-radius:50%;width:60px;height:60px;font-size:24px;box-shadow:0 0 10px rgba(0,0,0,0.4);cursor:pointer;">💋</button>
-
 <!-- Popup Locker -->
 <div id="popupLocker" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:9998;justify-content:center;align-items:center;flex-direction:column;color:white;text-align:center;padding:20px;">
-  <div style="max-width:90%;">
-    <h2 style="font-size:1.5rem;margin-bottom:1rem;">💖 Unlock Naughty Surprises 💖</h2>
-    <p>Choose one of these private access doors:</p>
-    <a href="https://tinyurl.com/4y6xvezz" target="_blank" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#ff4b91;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">🔥 See Who’s Ready to Hookup Near You</a>
-    <a href="https://tinyurl.com/37bhu8wx" target="_blank" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#8a2be2;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">💃 Watch Girls Flirt Live (Unfiltered!)</a>
-    <a href="https://tinyurl.com/mu38yx7z" target="_blank" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#ff0000;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">🔓 Unlock Free Photos & Videos Instantly</a>
-    <button onclick="document.getElementById('popupLocker').style.display='none'" style="margin-top:20px;padding:10px 20px;border:none;border-radius:20px;background:#666;color:white;">Close</button>
-  </div>
+<div style="max-width:90%;">
+<h2 style="font-size:1.5rem;margin-bottom:1rem;">💖 Unlock Naughty Surprises 💖</h2>
+<p>Choose one of these private access doors:</p>
+<a href="https://tinyurl.com/4y6xvezz" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#ff4b91;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">🔥 See Who’s Ready to Hookup Near You</a>
+<a href="https://tinyurl.com/37bhu8wx" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#8a2be2;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">💃 Watch Girls Flirt Live (Unfiltered!)</a>
+<a href="https://tinyurl.com/mu38yx7z" rel="noopener noreferrer" style="display:block;margin:10px;padding:12px 20px;background:#ff0000;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">🔓 Unlock Free Photos &amp; Videos Instantly</a>
+<button onclick="document.getElementById('popupLocker').style.display='none'" style="margin-top:20px;padding:10px 20px;border:none;border-radius:20px;background:#666;color:white;">Close</button>
 </div>
-
+</div>
 <script>
 document.getElementById('popupTrigger').onclick = function() {
   document.getElementById('popupLocker').style.display = 'flex';
 };
 </script>
-
-
-
 <!-- 🔥 Smartlink Buttons Section (Desktop only) -->
 <div id="desktopSmartlinks" style="display:none;text-align:center;margin-top:20px;">
-  <p style="color:white;font-weight:bold;">💥 Explore Hot & Naughty Secrets:</p>
-  <a href="https://shirleymcclure.github.io/SexyLinda/link1.html" target="_blank" style="margin:5px;padding:12px 20px;background:#ff4b91;color:white;font-weight:bold;border-radius:9999px;display:inline-block;">🔥 She’s 2 Miles Away & Very Horny 😈</a>
-  <a href="https://shirleymcclure.github.io/SexyLinda/link2.html" target="_blank" style="margin:5px;padding:12px 20px;background:#8a2be2;color:white;font-weight:bold;border-radius:9999px;display:inline-block;">💃 Live Strip Video Chat (Uncensored)</a>
-  <a href="https://shirleymcclure.github.io/SexyLinda/locker.html" target="_blank" style="margin:5px;padding:12px 20px;background:#ff0000;color:white;font-weight:bold;border-radius:9999px;display:inline-block;">🔓 Watch Her Nudes for Free – No Signup!</a>
+<p style="color:white;font-weight:bold;">💥 Explore Hot &amp; Naughty Secrets:</p>
+<a href="https://shirleymcclure.github.io/SexyLinda/link1.html" style="margin:5px;padding:12px 20px;background:#ff4b91;color:white;font-weight:bold;border-radius:9999px;display:inline-block;" target="_blank">🔥 She’s 2 Miles Away &amp; Very Horny 😈</a>
+<a href="https://shirleymcclure.github.io/SexyLinda/link2.html" style="margin:5px;padding:12px 20px;background:#8a2be2;color:white;font-weight:bold;border-radius:9999px;display:inline-block;" target="_blank">💃 Live Strip Video Chat (Uncensored)</a>
+<a href="https://shirleymcclure.github.io/SexyLinda/locker.html" style="margin:5px;padding:12px 20px;background:#ff0000;color:white;font-weight:bold;border-radius:9999px;display:inline-block;" target="_blank">🔓 Watch Her Nudes for Free – No Signup!</a>
 </div>
-
 <!-- Floating Button for Mobile -->
 <button id="popupTrigger" style="position:fixed;bottom:100px;right:20px;z-index:9999;background:#ff3896;color:#fff;border:none;border-radius:50%;width:60px;height:60px;font-size:24px;box-shadow:0 0 10px rgba(0,0,0,0.4);cursor:pointer;">💋</button>
-
 <!-- Popup Locker -->
 <div id="popupLocker" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:9998;justify-content:center;align-items:center;flex-direction:column;color:white;text-align:center;padding:20px;">
-  <div style="max-width:90%;">
-    <h2 style="font-size:1.5rem;margin-bottom:1rem;">💖 Unlock Naughty Surprises 💖</h2>
-    <p>Choose your temptation:</p>
-    <a href="https://shirleymcclure.github.io/SexyLinda/link1.html" target="_blank" style="display:block;margin:10px;padding:12px 20px;background:#ff4b91;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">🔥 She’s Nearby & Waiting For You 😈</a>
-    <a href="https://shirleymcclure.github.io/SexyLinda/link2.html" target="_blank" style="display:block;margin:10px;padding:12px 20px;background:#8a2be2;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">💃 See Her Strip Live Now</a>
-    <a href="https://shirleymcclure.github.io/SexyLinda/locker.html" target="_blank" style="display:block;margin:10px;padding:12px 20px;background:#ff0000;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;">🔓 Unlock Her Private Album for Free</a>
-    <button onclick="document.getElementById('popupLocker').style.display='none'" style="margin-top:20px;padding:10px 20px;border:none;border-radius:20px;background:#666;color:white;">Close</button>
-  </div>
+<div style="max-width:90%;">
+<h2 style="font-size:1.5rem;margin-bottom:1rem;">💖 Unlock Naughty Surprises 💖</h2>
+<p>Choose your temptation:</p>
+<a href="https://shirleymcclure.github.io/SexyLinda/link1.html" style="display:block;margin:10px;padding:12px 20px;background:#ff4b91;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">🔥 She’s Nearby &amp; Waiting For You 😈</a>
+<a href="https://shirleymcclure.github.io/SexyLinda/link2.html" style="display:block;margin:10px;padding:12px 20px;background:#8a2be2;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">💃 See Her Strip Live Now</a>
+<a href="https://shirleymcclure.github.io/SexyLinda/locker.html" style="display:block;margin:10px;padding:12px 20px;background:#ff0000;border-radius:9999px;color:white;font-weight:bold;text-decoration:none;" target="_blank">🔓 Unlock Her Private Album for Free</a>
+<button onclick="document.getElementById('popupLocker').style.display='none'" style="margin-top:20px;padding:10px 20px;border:none;border-radius:20px;background:#666;color:white;">Close</button>
 </div>
-
+</div>
 <script>
   if (window.innerWidth > 768) {
     document.getElementById("desktopSmartlinks").style.display = "block";
@@ -2271,6 +2276,5 @@ document.getElementById('popupTrigger').onclick = function() {
     document.querySelector(".send-btn")?.addEventListener("click", resetInactivityTimer);
   });
 </script>
-
 </body>
 </html>
