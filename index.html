@@ -1326,6 +1326,39 @@
     padding-bottom: 140px !important; /* make room but not too much */
   }
 }
+
+/* Mobile layout fix: reduce button height, fix scroll space */
+@media (max-width: 768px) {
+  #desktopSmartlinks {
+    display: block !important;
+    margin: 6px auto;
+    padding: 6px 4px;
+    max-width: 100%;
+  }
+  #desktopSmartlinks a {
+    font-size: 0.75rem;
+    padding: 8px 10px;
+    margin: 3px auto;
+  }
+  #desktopSmartlinks p {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+  .chat-messages {
+    padding-bottom: 120px !important;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+  .app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  body, html {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
 </style>
 </head>
 <body>
@@ -1368,10 +1401,10 @@
 <div class="chat-messages pulsing-bg" id="chatMessages">
 <!-- Enhanced chat background with sexy blurry images -->
 <div class="chat-background">
-<div class="blur-image blur-image-1"></div>
-<div class="blur-image blur-image-2"></div>
-<div class="blur-image blur-image-3"></div>
-<div class="blur-image blur-image-4"></div>
+<div class="blur-image blur-image-1" style="; opacity: 0.95; filter: blur(2px) brightness(1.2);"></div>
+<div class="blur-image blur-image-2" style="; opacity: 0.95; filter: blur(2px) brightness(1.2);"></div>
+<div class="blur-image blur-image-3" style="; opacity: 0.95; filter: blur(2px) brightness(1.2);"></div>
+<div class="blur-image blur-image-4" style="; opacity: 0.95; filter: blur(2px) brightness(1.2);"></div>
 <div class="bg-pattern bg-pattern-hearts"></div>
 <div class="bg-pattern bg-pattern-stars"></div>
 <!-- Additional graphic elements inside chat window -->
